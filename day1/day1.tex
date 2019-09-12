@@ -1,0 +1,74 @@
+% Geometry, font
+\documentclass[12pt, letter]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{titling}
+\setlength{\droptitle}{-5em} 
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\graphicspath{{imgs/}}
+\usepackage{hyperref}
+
+% Math stuff
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+% Code Highlighting
+\usepackage{minted}
+\usemintedstyle{solarizedlight}
+
+\author{Zach Neveu}
+\title{ Intro Lecture Notes }
+
+\begin{document}
+\maketitle
+
+\section{Course Intro}%
+\label{sec:course_intro}
+\begin{itemize}
+	\item Using DTU Learn instead of DTU Inside
+	\item Goal: learn fundamental sp methods, and code in Matlab/Python
+	\item Should be able to create a modern signal processing system with ML by the end
+	\item 4 hours of hw/week
+	\item each class 1 hour of lecture, 3 hours of exercises
+	\item Exercises as live scripts/Jupyter notebooks
+\end{itemize}
+
+\section{Course Plan}%
+\label{sec:course_plan}
+
+\begin{itemize}
+	\item 3 parts
+	\item Conventional DSP
+	\item Linear Methods
+	\item Non-linear methods - hmms neural nets
+\end{itemize}
+
+\section{Technical Lecture}%
+\label{sec:technical_lecture}
+\begin{itemize}
+	\item Traditional SP - doesn't care much about input content
+	\item Traditional ML - not particularly friendly for time series of signals
+	\item MLSP - combines the two
+	\item Example Areas
+	\begin{itemize}
+		\item sparsity-aware learning - compression
+		\item Information-theoretic learning
+		\item Adaptive filtering
+		\item Sound processing
+		\item Images/Videos
+		\item Telecommunications
+		\item Sensors
+	\end{itemize}
+\end{itemize}
+
+\section{Connection}%
+\label{sec:connection}
+\begin{itemize}
+	\item Simplest connection - $h(t)$ can be a classifier etc. ML is just a specific kind of of non-linear processing.
+	\item Another idea: signal processing is how to get a small amount of features from a large amount of data
+\end{itemize}
+
+\end{document}

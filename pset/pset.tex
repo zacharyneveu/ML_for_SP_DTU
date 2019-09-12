@@ -1,0 +1,35 @@
+% Geometry, font
+\documentclass[12pt, letter]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{titling}
+\setlength{\droptitle}{-5em} 
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\graphicspath{{imgs/}}
+\usepackage{hyperref}
+
+% Math stuff
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+% Code Highlighting
+\usepackage{minted}
+\usemintedstyle{solarizedlight}
+
+\author{Zach Neveu}
+\title{  }
+
+\begin{document}
+\maketitle
+
+\section{Question 9}%
+\label{sec:question_9}
+\[
+x(t) = A\cos(2\piF_0t+\theta) = Re(e^{j 2\piF_0+\theta}) = \frac{1}{2}\big(e^{-(j 2\piF_0+\theta)}+e^{j 2\piF_0+\theta}\big)
+\] 
+
+
+\end{document}
