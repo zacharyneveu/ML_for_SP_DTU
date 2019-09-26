@@ -1,0 +1,117 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Latex Notes Template
+%	Zach Neveu
+%	zachary.neveu@gmail.com
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Geometry, font
+\documentclass[12pt, letter]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{titling}
+\setlength{\droptitle}{-5em} 
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\graphicspath{{imgs/}}
+\usepackage{hyperref}
+
+% Math stuff
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+% Code Highlighting
+\usepackage{minted}
+\usemintedstyle{solarizedlight}
+
+\author{Zach Neveu}
+\title{ Day 4: Linear Filtering and Stochastic Processes}
+
+\begin{document}
+\maketitle
+
+\section{Recap}%
+\label{sec:recap}
+\begin{itemize}
+	\item Last week: general systems + noise
+	\item General system $y=\theta^T*[1 x]+\eta$ where $\eta$ is noise
+	\item $y$ is linear w.r.t $\theta$, affine w.r.t $x$
+\end{itemize}
+
+\section{This week}%
+\label{sec:this_week}
+\begin{itemize}
+	\item $\eta$ included in input signal, rather than added after the system
+	\item $\eta$ doesn't have to be IID anymore
+	\item Idea: filter design as a learning problem to minimize a cost function
+	\item Specify cost function in time domain
+	\item $e_n = d_n - \hat{d}_n$ is error function
+	\item If we minimize the MSE, we get a \textbf{Wiener Filter} 
+	\item $\hat{d}_n = \sum_{i=0}^{l-1} w_iu_{n-i}$ where $u_n$ is a realization of a random variable and $w_i$ is a weight
+\end{itemize}
+
+\section{Applications}%
+\label{sec:applications}
+\subsection*{System Identification}
+\begin{itemize}
+	\item If we have access to a system but don't know what it is we might want to model it
+	\item Using Wiener filter, possible to learn the impulse response of the system
+	\item Also useful if output is a mixture of two signals and we want to remove one
+	\item $d_n = s_n + y_n$, where $y[n] = H(u[n])$. We can learn  $H()$ to subtract $s_n$ from $d_n$
+	\item Example: echo cancellation
+	\item Benefit of learned IR is that it can change over time for example if someone moves their phone etc.
+	\item Example 2: noise cancellation
+	\item Want to cancel noise in the cabin, can learn IR between engine and cabin
+\end{itemize}
+
+\section{Stochastic Processes}%
+\label{sec:stochastic_processes}
+\begin{itemize}
+	\item Stationary: RP is stationary if the distribution of the sample at all times is equal
+	\item Useful Statistics about RPs
+	\begin{itemize}
+		\item Mean
+		\item Autocovariance at time instants: covariance of process at one time with process at different time
+		\item Autocorrelation at time instants: Product of two different time instances
+		\item Cross-correlation at time instants: measure similarity of two different signals at two time instances
+	\end{itemize}
+	\item WSS: wide sense stationary (weaker form of stationary): mean value is constant, and autocorrelation of samples depends only on their difference
+	\item Mean and Covariance Ergotic - Mean and covariance over time are equal to mean and covariance across realizations. Ergotic processe are also WSS
+\end{itemize}
+
+\section{Autoregressive Models}%
+\label{sec:autoregressive_models}
+\begin{itemize}
+	\item Assume that the next sample depends on the last $l$ samples
+	\item $ \sum_{k=1}^{l} a_k u_{n-k} +\eta_n$
+	\item This simple model is quite useful
+	\item AR(1) process - $l=1$, depends only on previous value
+	\item Notion of causality embedded in this model
+	\item Large $a \to$ more low frequencies, small $a \to$ closer to white
+\end{itemize}
+
+\section{Normal Equations}%
+\label{sec:normal_equations}
+\begin{itemize}
+	 \item Looking to estimate $\theta$ for linear model
+	 \item Loss function: $J(\theta) = E[(y-\hat{y})^2]$ (MSE)
+	 \item $\theta_* := argmin_\theta J(\theta)$ is MSE optimal $\theta$ (not $\hat{\theta}$ because if properties of signal are known, this is known to be optimal)
+	 \item To analytically minimize $J(\theta)$, plug in $\hat{y}$, take gradient w.r.t. $\theta$, set equal to 0
+	 \item Result: $E[x x^T]\theta = E[xy]$
+	 \item Left side of this is auto correlation of x, right side is cross-correlation of x,y
+	 \item $\theta_* = E[xy] * E[x x^T]^{-1}$
+	 \item In practice, these values would take infinite time to calculate
+	 \item Makes the assumption that auto correlation matrix invertible
+	 \item can estimate both matrices from finite amount of data
+	 \item Wiener filter: $\theta_* = \Sigma_x^{-1} r_{xy}$ where  $r_{xy}$ is cross correlation
+	 \item To use Wiener filter we must:
+	 \begin{itemize}
+	 	 \item Specify desired signal
+		 \item Compute autocorrelation of input signal
+		 \item Compute cross-correlation between input signal and desired signal
+	 \end{itemize}
+\end{itemize}
+
+
+\end{document}
