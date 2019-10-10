@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Latex Notes Template
+%	Zach Neveu
+%	zachary.neveu@gmail.com
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Geometry, font
+\documentclass[12pt, letter]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{titling}
+\setlength{\droptitle}{-5em} 
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\graphicspath{{imgs/}}
+\usepackage{hyperref}
+
+% Math stuff
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+% Code Highlighting
+\usepackage{minted}
+\usemintedstyle{solarizedlight}
+
+\author{Zach Neveu}
+\title{ Lecture 6: Least Squares and RLS }
+
+\begin{document}
+\maketitle
+\subsection*{Course Structure Notes}
+\begin{itemize}
+	\item DO ALL EXERCISES
+	\item Exercises are primary material for exam - this is why no solns given
+	\item Pset 2: due 27/10 - supposed to be pretty easy
+	\item Mini Project - max 3 pages, 1-3 people, presented at oral exam
+	\begin{itemize}
+		\item Focus on using a different dataset, and adding some extra analysis
+		\item 15-20 hours per person
+		\item One week at the end with no lecture for focusing on this
+	\end{itemize}
+	\item Exam sometime after 12/10
+\end{itemize}
+
+
+\subsection*{Review}
+\begin{itemize}
+	\item Orthogonality principle: $\hat{y}$ vector should be orthogonal to the plane of the data points
+	\item In other words, $e*\hat{y} = 0$ because $\hat{y}$ is orthogonal to $e$ 
+	\item NLMS algorithm. Theories around valid, stable and optimal step sizes $\mu$
+	 \begin{itemize}
+		\item Step size: between $0 < \mu  < \frac{1}{\lambda_{max}}$, $\lambda$ is max eigval of $\Sigma_x$
+		\item Stable step size: $\mu < \frac{2}{tr(\Sigma_x)}$ (trace is sum of eigvals)
+		\item Total error: $J_{total} = J_{min} + J_{excess} + J_{lag}$
+		\item Excess error: error resulting from the fact that SGD never fully stabilizes (variance of converged algorithm)
+		\item Min error: error once algorithm is stable. (bias in optimal point)
+		\item Lag error: In time-varying environment, filter always lags behind reality, causing error. Basically, the optimal point keeps changing.
+		\item Big step size adds to excess error, subtracts from lag
+	\end{itemize}
+\end{itemize}
+
+\subsection*{RLS}
+\begin{itemize}
+	\item Converges in less iterations than NLMS
+	\item Has better error rate than NLMS
+	\item How does it get this free lunch??
+	\item Loses time tracking ability, not as good in real life sometimes.
+	\item Possible to diverge if large changes occur
+	\item RLS quite sensitive to fixed point errors - big problem in hardware
+	\item Cost function exponentially weights
+	\item Params: 
+	\begin{itemize}
+		\item $\beta \to$ forgetting factor. Small $\beta \to$ forget fast
+		\item $\lambda \to$ regularization multiplier - when few n, don't overfit
+	\end{itemize}
+	$\Beta \to$
+\end{itemize}
+
+\end{document}

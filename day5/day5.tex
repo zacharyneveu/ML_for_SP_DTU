@@ -1,0 +1,82 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	Latex Notes Template
+%	Zach Neveu
+%	zachary.neveu@gmail.com
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Geometry, font
+\documentclass[12pt, letter]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fourier}
+\usepackage{titling}
+\setlength{\droptitle}{-5em} 
+\usepackage[parfill]{parskip}
+\usepackage{graphicx}
+\graphicspath{{imgs/}}
+\usepackage{hyperref}
+
+% Math stuff
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+
+% Code Highlighting
+\usepackage{minted}
+\usemintedstyle{solarizedlight}
+
+\author{Zach Neveu}
+\title{ Lecture 5: Adaptive Filtering }
+
+\begin{document}
+\maketitle
+
+\subsection*{LMS Algorithm}
+\begin{itemize}
+\item Initialize filter $\theta_{-1} = 0$ (for all $l$ filters)
+	 \item Choose step size $\mu$
+	 \item For each time step
+	 \item Note: $x_n$ means \texttt{x[n-l:]}
+	 \begin{itemize}
+	 \item $e_n = y_n - \theta_n^Tx_n$
+	 \item $\theta_n = \theta_{n-1}+\mu e_n x_n$
+	 \end{itemize}
+	 \item Parameters to choose: filter length, step size $\mu$
+	 \end{itemize}
+
+	 \subsection*{Normalized LMS}
+	 \begin{itemize}
+	 \item Idea: change step size based on how much energy is in signal
+	 \item Same initialization
+	 \item Select $0 < \mu < 2$
+	 \item For each time step:
+	 \begin{itemize}
+	 \item same error
+	 \item $\theta_n = \theta_{n-1} + \frac{\mu}{x^T_nx_n+\delta} e_nx_n$
+	 \end{itemize}
+	 \end{itemize}
+
+	 \section{Convergence}%
+	 \label{sec:convergence}
+	 \begin{itemize}
+	 \item LMS: small step size, slow convergence, but good optimal value
+	 \item LMS: large step size, fast convergence, bad optimal value
+	 \item LMS converges slower for colored noise than white noise 
+	 \item NLMS: similar convergence rate to LMS but better final MSE
+	 \item NLMS generally preferred over LMLS
+	 \item APA: see ML ch 5.6 - similar type of algorithm
+	 \item LMS: Optimal step size: $0 < \mu < \frac{2}{\lambda_{max}}$ where $\lambda$ is the eigenvalues of $\Sigma_x$ 
+	 \item LMS: fastest convergence step size: $\frac{2}{\lambda_{max}-\lambda_{min}}$
+	  \item Bias-Variance tradeoff: smaller $\mu$ varies less, but stays off by more on convergence.
+	 \end{itemize}
+
+	 \section{Derivation of LMS}%
+	 \label{sec:derivation_of_lms}
+	 \begin{itemize}
+	 \item Goal: develop an iterative scheme where the cost function $J(\theta_{n+1}) < J(\theta_n)$
+	 \item Require that cost function is differentiable
+	 \item Basics: LMS just SGD with a single example for the gradient.
+	 \end{itemize}
+
+
+	 \end{document}
